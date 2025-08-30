@@ -1,0 +1,27 @@
+Backend - 
+For Backend Hono with cloudfare-workers.
+
+Why Hono?
+
+Hono is a lightweight, TypeScript-first web framework optimized for edge runtimes like Cloudflare Workers. I chose it because it delivers high performance, minimal bundle size, and runs at the edge—meaning the backend is deployed closer to users worldwide for faster responses.cl
+
+Database - We have a postgress database in prisma, instead of using direct db link, we use accelerater link. (Connection Pooling).
+
+Normally, when your app talks to the database, it opens a new connection each time.
+
+If many users hit your app at the same time, it may open too many connections → database crashes or slows down.
+
+Connection pooling (via Prisma Accelerate link) means: instead of opening a new door every time, your app goes through a shared gate where connections are reused and managed automatically.
+
+This makes things faster, stable, and production-ready, especially for cloud or serverless environments.
+
+When you have multiple servers in serverless architecture, you don't connect to the database directly. So, each of these servers connects to a connection pool, which connects to the database.
+
+Q1. Why do we keep DATABASE_URL in .env when we already have the Prisma Accelerate URL?
+
+A: Because DATABASE_URL is used by Prisma CLI for migrations and schema operations (DDL), which Accelerate does not support. Accelerate is only for runtime queries (DML).
+
+Q2. Why can’t we put the Accelerate URL in .env?
+
+A: Prisma CLI doesn’t understand prisma://… URLs — it needs a direct DB connection (e.g., postgresql://…) to run migrations, introspection, and client generation.
+
