@@ -1,29 +1,34 @@
 import type { FC } from "react";
 import BlogCard from "./BlogCard";
+import Appbar from "../components/Appbar";
+import { useBlogs } from "../hooks";
 
 const Blogs: FC = () => {
+    const { loading, blogs } = useBlogs();
+
+    if(loading){
+        return <div>Loading...</div>;
+    }
+    console.log('blogs in Blogs page:', blogs);
     return (
+        <div>
+        <Appbar />
         <div className="flex justify-center">
-            <div className="max-w-xl">
-                <BlogCard
-                    authorName="John Doe"
-                    title="How an ugly single page website makes $5000 a month without affliate marketing"
-                    content="No need to create a fancy and modern website with hundreds of pages to make money online. - Making money online is dream for many"
-                    publishedDate="2024-06-15"
-                />
-                <BlogCard
-                    authorName="John Doe"
-                    title="How an ugly single page website makes $5000 a month without affliate marketing"
-                    content="No need to create a fancy and modern website with hundreds of pages to make money online. - Making money online is dream for many"
-                    publishedDate="2024-06-15"
-                />
-                <BlogCard
-                    authorName="John Doe"
-                    title="How an ugly single page website makes $5000 a month without affliate marketing"
-                    content="No need to create a fancy and modern website with hundreds of pages to make money online. - Making money online is dream for many"
-                    publishedDate="2024-06-15"
-                />
+            <div>
+                {
+                    blogs?.map((blog: any) => (
+                        <BlogCard
+                            key={blog.id}
+                            authorName={blog.author.name}
+                            title={blog.title}
+                            content={blog.content}
+                            publishedDate={new Date(blog.published).toLocaleDateString()}
+                            id={blog.id}
+                        />
+                    ))
+                }
             </div>
+        </div>
         </div>
     )
 };

@@ -12,6 +12,7 @@ export const userRouter = new Hono<{
 }>();
 
 userRouter.post('/signup', async(c) => {
+  console.log('Signup route called');
   const env = c.env;
   const prisma = new PrismaClient({
     datasourceUrl: env.DATABASE_ACCELERATE_URL,
@@ -19,8 +20,7 @@ userRouter.post('/signup', async(c) => {
   const body = await c.req.json();
   const { success } = signupInput.safeParse(body);
   if(!success) {
-    c.status(400);
-    return c.json({ error: "Invalid input" });
+    return c.json({ error: "Invalid input", status: 400 });
   }
   try {
     const user = await prisma.user.create({
@@ -33,7 +33,7 @@ userRouter.post('/signup', async(c) => {
    const token = await sign({ id: user.id }, env.JWT_SECRET);
     return c.json({ jwt: token });
   } catch (error) {
-    return c.status(403);
+    return c.json({ error: "User already exists", status: 403 });
   }
 })
 

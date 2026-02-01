@@ -38,16 +38,26 @@ blogRouter.get('/bulk', async(c) => {
     }).$extends(withAccelerate());
     console.log('prisma',prisma);
     try {
-        const blogs = await prisma.post.findMany();
-        console.log('blogs',blogs);
+        const blogs = await prisma.post.findMany({
+          select: {
+            id: true,
+            title: true,
+            content: true,
+            published: true,
+            author: {
+              select: {
+                name: true
+              }
+            }
+          }
+        });
         return c.json(blogs);
     } catch (error) {
-        return c.json({ error: 'Error fetchin blogs' });
+        return c.json({ error: 'Error fetching blogs' });
     }
 })
 
 blogRouter.get('/:id', async(c) => { 
-  console.log('here');
   const env = c.env;
   const prisma = new PrismaClient({
     datasourceUrl: env.DATABASE_ACCELERATE_URL,
@@ -57,7 +67,19 @@ blogRouter.get('/:id', async(c) => {
         const blog = await prisma.post.findFirst({
             where : {
                 id: id
+            },
+            select: {
+              id: true,
+              title: true,
+              content: true,
+              published: true,
+              author: {
+                select: {
+                  name: true
+                }
+              }
             }
+                
         })
         return c.json(blog);
     } catch (error) {

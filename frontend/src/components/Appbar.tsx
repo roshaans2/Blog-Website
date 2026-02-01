@@ -1,0 +1,19 @@
+import { Link } from "react-router";
+import { Avatar } from "../pages/BlogCard";
+
+const Appbar = () => {
+    return (
+        <div className="border-b flex justify-between px-10 py-4">
+            <Link to="/blogs">
+                <div className="flex justify-center flex-col text-lg font-bold cursor-pointer">
+                    Medium
+                </div>
+            </Link>
+            <div>
+                <Avatar authorName="John Doe" size="big"/>
+            </div>
+        </div>
+    )
+};
+
+export default Appbar;
