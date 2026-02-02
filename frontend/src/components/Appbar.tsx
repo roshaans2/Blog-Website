@@ -10,6 +10,11 @@ const Appbar = () => {
                 </div>
             </Link>
             <div>
+                <Link to="/publish">
+                    <button type="button" className=" bg-gray-600 rounded-full px-5 py-2.5 text-white font-semibold mr-4 cursor-pointer">
+                        New
+                    </button>
+                </Link>
                 <Avatar authorName="John Doe" size="big"/>
             </div>
         </div>
