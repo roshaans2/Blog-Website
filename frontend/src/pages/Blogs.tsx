@@ -2,12 +2,18 @@ import type { FC } from "react";
 import BlogCard from "./BlogCard";
 import Appbar from "../components/Appbar";
 import { useBlogs } from "../hooks";
+import { BlogSkeleton } from "./BlogSkeleton";
 
 const Blogs: FC = () => {
     const { loading, blogs } = useBlogs();
 
     if(loading){
-        return <div>Loading...</div>;
+        return (
+            <div>
+                <Appbar />
+                <BlogSkeleton count={5} />
+            </div>
+        );
     }
     console.log('blogs in Blogs page:', blogs);
     return (
