@@ -17,6 +17,7 @@ const Form: FC<FormProps> = ({ type }) => {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/${type}`, formInputs);
             const jwt = response.data.jwt;
             localStorage.setItem('token', jwt);
+            localStorage.setItem('username', response.data.name);
             navigate('/blogs');
         } catch (err) {
             console.error(err);

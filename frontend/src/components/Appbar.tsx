@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { Avatar } from "../pages/BlogCard";
 
 const Appbar = () => {
+    const userName = localStorage.getItem('username') ?? '';
     return (
         <div className="border-b flex justify-between px-10 py-4">
             <Link to="/blogs">
@@ -15,7 +16,7 @@ const Appbar = () => {
                         New
                     </button>
                 </Link>
-                <Avatar authorName="John Doe" size="big"/>
+                <Avatar authorName={userName} size="big"/>
             </div>
         </div>
     )

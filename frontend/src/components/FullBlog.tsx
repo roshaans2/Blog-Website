@@ -3,7 +3,6 @@ import { Avatar } from "../pages/BlogCard";
 import Appbar from "./Appbar";
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
-    console.log('blog in FullBlog component:', blog);
     return (
         <div>
             <Appbar />

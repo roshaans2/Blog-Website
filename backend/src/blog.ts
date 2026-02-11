@@ -36,7 +36,6 @@ blogRouter.get('/bulk', async(c) => {
     const prisma = new PrismaClient({
         datasourceUrl: env.DATABASE_ACCELERATE_URL,
     }).$extends(withAccelerate());
-    console.log('prisma',prisma);
     try {
         const blogs = await prisma.post.findMany({
           select: {
